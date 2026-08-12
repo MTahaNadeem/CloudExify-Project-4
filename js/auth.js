@@ -113,6 +113,29 @@ async function requireUserSession() {
     }
 }
 
+async function requireAdmin() {
+    const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+    if (error || !session) {
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    try {
+        const { data: profile, error: profileError } = await window.supabaseClient
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
+            
+        if (profileError || !profile || profile.role !== 'admin') {
+            window.location.href = 'index.html';
+        }
+    } catch (err) {
+        window.location.href = 'index.html';
+    }
+}
+window.requireAdmin = requireAdmin;
+
 async function updateNavbar() {
     const { data: { session } } = await supabaseClient.auth.getSession();
     const loggedInEls = document.querySelectorAll('.auth-in');
