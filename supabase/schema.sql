@@ -25,6 +25,11 @@ create table menu_items (
   created_at timestamp default now()
 );
 
+alter table menu_items enable row level security;
+
+create policy "Menu items are viewable by everyone" on menu_items
+  for select using (true);
+
 -- orders table
 create table orders (
   id serial primary key,
