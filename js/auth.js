@@ -125,10 +125,28 @@ async function updateNavbar() {
     const { data: { session } } = await supabaseClient.auth.getSession();
     const loggedInEls = document.querySelectorAll('.auth-in');
     const loggedOutEls = document.querySelectorAll('.auth-out');
+    const adminEls = document.querySelectorAll('.admin-only');
     
     if (session) {
         loggedInEls.forEach(el => el.classList.remove('d-none'));
         loggedOutEls.forEach(el => el.classList.add('d-none'));
+        
+        // Hide admin elements by default
+        adminEls.forEach(el => el.classList.add('d-none'));
+        
+        try {
+            const { data: profile } = await supabaseClient
+                .from('profiles')
+                .select('role')
+                .eq('id', session.user.id)
+                .single();
+                
+            if (profile && profile.role === 'admin') {
+                adminEls.forEach(el => el.classList.remove('d-none'));
+            }
+        } catch (err) {
+            console.error("Error fetching role for navbar:", err);
+        }
     } else {
         loggedInEls.forEach(el => el.classList.add('d-none'));
         loggedOutEls.forEach(el => el.classList.remove('d-none'));
