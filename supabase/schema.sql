@@ -44,6 +44,6 @@ alter table orders enable row level security;
 
 create policy "Users see own orders" on orders
   for select using (auth.uid() = user_id);
-  
+
 create policy "Users insert own orders" on orders
   for insert with check (auth.uid() = user_id);
