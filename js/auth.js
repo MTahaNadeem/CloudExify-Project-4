@@ -119,14 +119,14 @@ async function requireAdmin() {
         window.location.href = 'login.html';
         return;
     }
-    
+
     try {
         const { data: profile, error: profileError } = await window.supabaseClient
             .from('profiles')
             .select('role')
             .eq('id', session.user.id)
             .single();
-            
+
         if (profileError || !profile || profile.role !== 'admin') {
             window.location.href = 'index.html';
         }
@@ -142,7 +142,7 @@ async function updateNavbar() {
     const loggedOutEls = document.querySelectorAll('.auth-out');
     const adminEls = document.querySelectorAll('.admin-only');
     const cartLinks = document.querySelectorAll('.cart-link-item');
-    
+
     // Hide all right-side links entirely on auth pages
     const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html');
     if (isAuthPage) {
@@ -152,21 +152,21 @@ async function updateNavbar() {
         adminEls.forEach(el => el.classList.add('d-none'));
         return;
     }
-    
+
     if (session) {
         loggedInEls.forEach(el => el.classList.remove('d-none'));
         loggedOutEls.forEach(el => el.classList.add('d-none'));
-        
+
         // Hide admin elements by default
         adminEls.forEach(el => el.classList.add('d-none'));
-        
+
         try {
             const { data: profile } = await supabaseClient
                 .from('profiles')
                 .select('role')
                 .eq('id', session.user.id)
                 .single();
-                
+
             if (profile && profile.role === 'admin') {
                 if (!isAuthPage) adminEls.forEach(el => el.classList.remove('d-none'));
             }
