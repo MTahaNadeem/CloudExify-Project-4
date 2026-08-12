@@ -156,7 +156,6 @@ async function updateOrderStatus(orderId, newStatus) {
             window.showToast('Failed to update status.', 'error');
         }
     }
-    }
 }
 
 // --- Menu Management Functions ---
