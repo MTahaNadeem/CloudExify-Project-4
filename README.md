@@ -1,11 +1,11 @@
-# [Project Name]
+# Cafe & Bakery - Restaurant App
 
-**Developer:** [Your Name]
-**Registration Number:** [Your Registration Number]
-**Restaurant Concept:** [Concept Chosen]
+**Developer:** Muhammad Taha Nadeem
+**Registration Number:** CX-INT-2026-GEN-0490
+**Restaurant Concept:** Cafe & Bakery
 
 ## Live Demo
-[Live Vercel Link]
+https://mtn-cloudexify-project-4.vercel.app/
 
 ## Admin Credentials
 **Email:** [Admin Email]

@@ -1,1 +1,6 @@
-/* Main stylesheet */
+:root {
+  --primary-color: #6F4E37; /* Coffee Brown */
+  --secondary-color: #F2E3D0; /* Warm Cream */
+}
+
+/* Global styles can be added here as we build out the pages */
