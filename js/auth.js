@@ -26,6 +26,36 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Register';
         });
     }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const messageDiv = document.getElementById('loginMessage');
+            
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            
+            messageDiv.className = 'd-none alert mt-3 text-center';
+            
+            await loginUser(email, password, messageDiv);
+            
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Login';
+        });
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await logoutUser();
+        });
+    }
 });
 
 async function registerUser(name, email, password, messageDiv) {
@@ -65,4 +95,32 @@ function showMessage(element, text, type) {
     element.textContent = text;
     element.className = `alert alert-${type} mt-3 text-center`;
     element.classList.remove('d-none');
+}
+
+async function loginUser(email, password, messageDiv) {
+    try {
+        const { error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (error) throw error;
+
+        // On success, redirect to index
+        window.location.href = 'index.html';
+    } catch (error) {
+        showMessage(messageDiv, error.message, 'danger');
+    }
+}
+
+async function requireUserSession() {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error || !session) {
+        window.location.href = 'login.html';
+    }
+}
+
+async function logoutUser() {
+    await supabase.auth.signOut();
+    window.location.href = 'login.html';
 }
