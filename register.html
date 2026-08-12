@@ -26,7 +26,30 @@
 
     <main class="container my-5">
         <div id="registerFormContainer" class="col-md-6 mx-auto">
-            <!-- Register form will be injected/placed here -->
+            <div class="card shadow-sm border-0" style="background-color: var(--secondary-color);">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4" style="color: var(--primary-color);">Create an Account</h2>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label fw-bold">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email address</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-bold">Password</label>
+                            <input type="password" class="form-control" id="password" minlength="6" required>
+                        </div>
+                        <button type="submit" class="btn w-100 fw-bold" style="background-color: var(--primary-color); color: var(--secondary-color);">Register</button>
+                    </form>
+                    <div id="registerMessage" class="d-none alert mt-3 text-center"></div>
+                    <div class="text-center mt-3">
+                        <a href="login.html" class="text-decoration-none" style="color: var(--primary-color);">Already have an account? Login here.</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
