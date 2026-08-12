@@ -21,6 +21,31 @@
   --font-mono: 'IBM Plex Mono', monospace;
 }
 
+.hero-section {
+  min-height: 60vh;
+  padding-top: 120px !important;
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --text-xxl: 2.25rem;
+    --text-xl: 1.75rem;
+    --text-lg: 1.25rem;
+  }
+  .hero-section {
+    min-height: 50vh !important;
+    padding-top: 80px !important;
+  }
+  
+  /* Kitchen strip responsive overflow */
+  .kitchen-strip .row {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
