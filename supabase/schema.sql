@@ -5,6 +5,14 @@ create table profiles (
   role text default 'customer'
 );
 
+alter table profiles enable row level security;
+
+create policy "Users can insert their own profile" on profiles
+  for insert with check (auth.uid() = id);
+
+create policy "Users can read own profile" on profiles
+  for select using (auth.uid() = id);
+
 -- menu_items table
 create table menu_items (
   id serial primary key,
