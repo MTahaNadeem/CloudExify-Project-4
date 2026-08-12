@@ -121,6 +121,12 @@ async function requireUserSession() {
 }
 
 async function logoutUser() {
-    await supabase.auth.signOut();
-    window.location.href = 'login.html';
+    try {
+        const { error } = await supabase.auth.signOut();
+        if (error) console.error("Logout error:", error.message);
+    } catch (err) {
+        console.error("Unexpected error during logout:", err);
+    } finally {
+        window.location.href = 'login.html';
+    }
 }
