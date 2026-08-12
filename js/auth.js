@@ -2,26 +2,26 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
-    
+
     // Only bind if the form exists on the current page
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault(); // Prevent default page reload
-            
+
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const messageDiv = document.getElementById('registerMessage');
-            
+
             // Disable button during request
             const submitBtn = registerForm.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Registering...';
-            
+
             messageDiv.className = 'd-none alert mt-3 text-center';
-            
+
             await registerUser(fullName, email, password, messageDiv);
-            
+
             submitBtn.disabled = false;
             submitBtn.textContent = 'Register';
         });
@@ -31,19 +31,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             const messageDiv = document.getElementById('loginMessage');
-            
+
             const submitBtn = loginForm.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Logging in...';
-            
+
             messageDiv.className = 'd-none alert mt-3 text-center';
-            
+
             await loginUser(email, password, messageDiv);
-            
+
             submitBtn.disabled = false;
             submitBtn.textContent = 'Login';
         });
