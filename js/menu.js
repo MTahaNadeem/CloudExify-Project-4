@@ -89,7 +89,7 @@ function renderCategoryFilters(categories) {
 
     filterContainer.innerHTML = categories.map(cat => `
         <button class="btn btn-sm me-2 mb-2 ${cat === currentCategory ? 'active-filter' : 'btn-outline-secondary'}" 
-                style="${cat === currentCategory ? 'background-color: var(--primary-color); color: var(--secondary-color); border: none;' : 'color: var(--primary-color); border-color: var(--primary-color);'}"
+                style="${cat === currentCategory ? 'background-color: var(--ink); color: var(--paper); border: none;' : 'color: var(--ink); border-color: var(--ink);'}"
                 onclick="handleCategoryClick('${cat}', this)">
             ${cat}
         </button>
@@ -121,7 +121,7 @@ function renderMenuGrid(items) {
     // Placeholder SVG for broken/missing images
     const fallbackImage = `data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23F2E3D0%22%3E%3C%2Frect%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22%236F4E37%22%20dy%3D%22.3em%22%20style%3D%22font-size%3A1.5rem;font-weight%3Abold;text-anchor%3Amiddle%22%3ENo%20Image%3C%2Ftext%3E%3C%2Fsvg%3E`;
 
-    menuGrid.innerHTML = itemsToRender.map(item => `
+    menuGrid.innerHTML = items.map(item => `
         <div class="col-12 col-md-6 col-lg-4">
             <div class="ticket-wrapper">
                 <div class="card ticket-card h-100">
