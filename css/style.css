@@ -1,6 +1,30 @@
 :root {
-  --primary-color: #6F4E37; /* Coffee Brown */
-  --secondary-color: #F2E3D0; /* Warm Cream */
+  --primary-color: #6F4E37; /* Coffee brown */
+  --secondary-color: #F2E3D0; /* Warm cream */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Global styles can be added here as we build out the pages */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.navbar-custom {
+  background-color: var(--primary-color) !important;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: var(--secondary-color) !important;
+}
+
+.navbar-custom .nav-link:hover {
+  opacity: 0.8;
+}
