@@ -15,7 +15,38 @@
     <main class="container my-5 pt-5">
         <h2 class="mb-4 font-display" style="font-size: var(--text-xl);">Admin Dashboard</h2>
         <div id="dashboardStats" class="row g-4 mb-5">
-            <!-- Stat cards will be injected here -->
+            <div class="col-md-3 col-6">
+                <div class="card ticket-card h-100">
+                    <div class="card-body text-center p-4">
+                        <h6 class="font-mono small text-uppercase text-ink opacity-75 mb-3" style="font-size: 0.75rem;">Orders Today</h6>
+                        <h2 class="font-display text-brass mb-0" id="statOrdersToday">-</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card ticket-card h-100">
+                    <div class="card-body text-center p-4">
+                        <h6 class="font-mono small text-uppercase text-ink opacity-75 mb-3" style="font-size: 0.75rem;">Revenue Today</h6>
+                        <h2 class="font-display text-brass mb-0" id="statRevenueToday">-</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card ticket-card h-100">
+                    <div class="card-body text-center p-4">
+                        <h6 class="font-mono small text-uppercase text-ink opacity-75 mb-3" style="font-size: 0.75rem;">Pending Orders</h6>
+                        <h2 class="font-display text-brass mb-0" id="statPendingOrders">-</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card ticket-card h-100">
+                    <div class="card-body text-center p-4">
+                        <h6 class="font-mono small text-uppercase text-ink opacity-75 mb-3" style="font-size: 0.75rem;">Menu Items</h6>
+                        <h2 class="font-display text-brass mb-0" id="statMenuCount">-</h2>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="ordersDashboard" class="mb-5 table-responsive">

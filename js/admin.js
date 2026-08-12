@@ -1,6 +1,8 @@
 window.requireAdmin();
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadDashboardStats();
+    setInterval(loadDashboardStats, 30000);
     loadAllOrders();
 
     document.addEventListener('change', (e) => {
@@ -45,6 +47,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- Dashboard Stats Functions ---
+async function loadDashboardStats() {
+    try {
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+        
+        // 1. Fetch today's orders
+        const { data: todayOrders, error: todayError } = await supabaseClient
+            .from('orders')
+            .select('total')
+            .gte('created_at', startOfDay.toISOString());
+            
+        if (todayError) throw todayError;
+        
+        const ordersToday = todayOrders.length;
+        const revenueToday = todayOrders.reduce((sum, order) => sum + parseFloat(order.total), 0);
+        
+        // 2. Fetch pending orders (count only)
+        const { count: pendingCount, error: pendingError } = await supabaseClient
+            .from('orders')
+            .select('id', { count: 'exact', head: true })
+            .eq('status', 'Pending');
+            
+        if (pendingError) throw pendingError;
+        
+        // 3. Fetch total menu items (count only)
+        const { count: menuCount, error: menuError } = await supabaseClient
+            .from('menu_items')
+            .select('id', { count: 'exact', head: true });
+            
+        if (menuError) throw menuError;
+        
+        // Update DOM
+        const elOrders = document.getElementById('statOrdersToday');
+        const elRevenue = document.getElementById('statRevenueToday');
+        const elPending = document.getElementById('statPendingOrders');
+        const elMenuCount = document.getElementById('statMenuCount');
+        
+        if (elOrders) elOrders.innerText = ordersToday;
+        if (elRevenue) elRevenue.innerText = `Rs. ${revenueToday.toFixed(0)}`;
+        if (elPending) elPending.innerText = pendingCount || 0;
+        if (elMenuCount) elMenuCount.innerText = menuCount || 0;
+        
+    } catch (err) {
+        console.error("Error loading dashboard stats:", err);
+    }
+}
 
 async function loadAllOrders() {
     try {
