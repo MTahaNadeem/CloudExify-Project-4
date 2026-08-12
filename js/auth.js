@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function registerUser(name, email, password, messageDiv) {
     try {
         // 1. Sign up the user via Supabase Auth
-        const { data: authData, error: authError } = await supabase.auth.signUp({
+        const { data: authData, error: authError } = await supabaseClient.auth.signUp({
             email: email,
             password: password,
         });
@@ -70,7 +70,7 @@ async function registerUser(name, email, password, messageDiv) {
 
         if (authData.user) {
             // 2. Insert into profiles table
-            const { error: profileError } = await supabase
+            const { error: profileError } = await supabaseClient
                 .from('profiles')
                 .insert([
                     { id: authData.user.id, full_name: name, role: 'customer' }
@@ -99,7 +99,7 @@ function showMessage(element, text, type) {
 
 async function loginUser(email, password, messageDiv) {
     try {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabaseClient.auth.signInWithPassword({
             email: email,
             password: password,
         });
@@ -114,7 +114,7 @@ async function loginUser(email, password, messageDiv) {
 }
 
 async function requireUserSession() {
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (error || !session) {
         window.location.href = 'login.html';
     }
@@ -122,7 +122,7 @@ async function requireUserSession() {
 
 async function logoutUser() {
     try {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
         if (error) console.error("Logout error:", error.message);
     } catch (err) {
         console.error("Unexpected error during logout:", err);
