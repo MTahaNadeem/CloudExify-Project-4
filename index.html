@@ -46,8 +46,16 @@
                 <input type="text" id="searchInput" class="form-control border-0 shadow-sm" placeholder="Search menu..." style="background-color: var(--secondary-color); color: var(--primary-color);">
             </div>
         </div>
-        <div id="menuGrid" class="row g-4">
+        <div id="menuGrid" class="row g-4 mb-5">
             <!-- Menu items will be injected here -->
+        </div>
+        
+        <!-- My Orders section (only visible when logged in) -->
+        <div class="mt-5 pt-5 auth-in d-none" style="border-top: 1px solid rgba(111, 78, 55, 0.2);">
+            <h2 class="mb-4 fw-bold" style="color: var(--primary-color);">My Orders</h2>
+            <div id="myOrders" class="row g-4">
+                <!-- Orders will be injected here -->
+            </div>
         </div>
     </main>
 
