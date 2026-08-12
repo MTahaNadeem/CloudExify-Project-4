@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Fetch the navbar HTML
-        const response = await fetch('partials/navbar.html');
+        // Fetch the navbar HTML using absolute path from root
+        const response = await fetch('/partials/navbar.html');
         if (!response.ok) throw new Error('Failed to load navbar');
         const navbarHtml = await response.text();
         

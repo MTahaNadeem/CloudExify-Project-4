@@ -26,4 +26,6 @@ async function requireAdminSession() {
     }
 }
 
-requireAdminSession();
+document.addEventListener('DOMContentLoaded', () => {
+    requireAdminSession();
+});
