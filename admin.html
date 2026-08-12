@@ -10,22 +10,9 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand font-display" href="index.html">The Hearth Bakery Admin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">View Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <header id="site-navbar"></header>
 
-    <main class="container my-5">
+    <main class="container my-5 pt-5">
         <h2 class="mb-4 font-display" style="font-size: var(--text-xl);">Admin Dashboard</h2>
         <div id="ordersTable" class="table-responsive">
             <!-- Admin orders table will be injected here -->
@@ -38,6 +25,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- App Scripts -->
     <script src="js/supabase.js"></script>
+    <script src="js/navbar.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/admin.js"></script>
 </body>

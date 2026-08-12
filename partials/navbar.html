@@ -1,0 +1,24 @@
+    <nav id="mainNav" class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Cafe & Bakery</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-3 mb-2 mb-lg-0 cart-link-item">
+                        <button class="btn btn-outline-ink position-relative text-paper" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" style="border-color: var(--paper);">
+                            Cart
+                            <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                0
+                            </span>
+                        </button>
+                    </li>
+                    <li class="nav-item auth-out"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item auth-out"><a class="nav-link" href="register.html">Register</a></li>
+                    <li class="nav-item auth-in admin-only d-none"><a class="nav-link" href="admin.html">Admin</a></li>
+                    <li class="nav-item auth-in d-none"><a class="nav-link" href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>

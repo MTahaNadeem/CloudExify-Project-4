@@ -53,15 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await logoutUser();
-        });
-    }
-
-    updateNavbar();
+    // Navbar logic moved to js/navbar.js
 });
 
 async function registerUser(name, email, password) {
@@ -126,6 +118,17 @@ async function updateNavbar() {
     const loggedInEls = document.querySelectorAll('.auth-in');
     const loggedOutEls = document.querySelectorAll('.auth-out');
     const adminEls = document.querySelectorAll('.admin-only');
+    const cartLinks = document.querySelectorAll('.cart-link-item');
+    
+    // Hide all right-side links entirely on auth pages
+    const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html');
+    if (isAuthPage) {
+        cartLinks.forEach(el => el.classList.add('d-none'));
+        loggedInEls.forEach(el => el.classList.add('d-none'));
+        loggedOutEls.forEach(el => el.classList.add('d-none'));
+        adminEls.forEach(el => el.classList.add('d-none'));
+        return;
+    }
     
     if (session) {
         loggedInEls.forEach(el => el.classList.remove('d-none'));
@@ -142,7 +145,7 @@ async function updateNavbar() {
                 .single();
                 
             if (profile && profile.role === 'admin') {
-                adminEls.forEach(el => el.classList.remove('d-none'));
+                if (!isAuthPage) adminEls.forEach(el => el.classList.remove('d-none'));
             }
         } catch (err) {
             console.error("Error fetching role for navbar:", err);
@@ -152,6 +155,7 @@ async function updateNavbar() {
         loggedOutEls.forEach(el => el.classList.remove('d-none'));
     }
 }
+window.updateNavbar = updateNavbar;
 
 async function logoutUser() {
     try {
@@ -163,3 +167,4 @@ async function logoutUser() {
         window.location.href = 'login.html';
     }
 }
+window.logoutUser = logoutUser;
