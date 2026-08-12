@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
             await logoutUser();
         });
     }
+
+    updateNavbar();
 });
 
 async function registerUser(name, email, password, messageDiv) {
@@ -117,6 +119,20 @@ async function requireUserSession() {
     const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (error || !session) {
         window.location.href = 'login.html';
+    }
+}
+
+async function updateNavbar() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    const loggedInEls = document.querySelectorAll('.auth-in');
+    const loggedOutEls = document.querySelectorAll('.auth-out');
+    
+    if (session) {
+        loggedInEls.forEach(el => el.classList.remove('d-none'));
+        loggedOutEls.forEach(el => el.classList.add('d-none'));
+    } else {
+        loggedInEls.forEach(el => el.classList.add('d-none'));
+        loggedOutEls.forEach(el => el.classList.remove('d-none'));
     }
 }
 
