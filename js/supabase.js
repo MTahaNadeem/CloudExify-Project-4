@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!document.getElementById('toastContainer')) {
         const toastContainer = document.createElement('div');
         toastContainer.id = 'toastContainer';
-        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-        toastContainer.style.zIndex = '9999';
+        // Positioned top-right, stacked above all offcanvas/modals
+        toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3 mt-5';
+        toastContainer.style.zIndex = '1060'; 
         document.body.appendChild(toastContainer);
     }
 });
@@ -18,26 +19,32 @@ window.showToast = function(message, type = 'info') {
     if (!container) return; // Fallback if called before DOM ready
     
     const toastEl = document.createElement('div');
-    toastEl.className = 'toast align-items-center text-white border-0 shadow';
+    toastEl.className = 'toast align-items-center border-0 shadow-lg';
     toastEl.setAttribute('role', 'alert');
     toastEl.setAttribute('aria-live', 'assertive');
     toastEl.setAttribute('aria-atomic', 'true');
     
-    // Theme colors mapping
-    let bgClass = 'bg-ink'; // Default fallback
-    if (type === 'success') bgClass = 'bg-sage';
-    if (type === 'error' || type === 'danger') bgClass = 'bg-berry';
-    if (type === 'warning') bgClass = 'bg-brass text-paper';
-    if (type === 'info') bgClass = 'bg-ink text-paper';
-
-    toastEl.classList.add(bgClass);
+    // Solid background and text color based on type
+    if (type === 'success') {
+        toastEl.style.backgroundColor = 'var(--sage)';
+        toastEl.style.color = 'var(--paper)';
+    } else if (type === 'error' || type === 'danger') {
+        toastEl.style.backgroundColor = 'var(--ink)';
+        toastEl.style.color = 'var(--paper)';
+    } else if (type === 'warning') {
+        toastEl.style.backgroundColor = 'var(--brass)';
+        toastEl.style.color = 'var(--paper)';
+    } else {
+        toastEl.style.backgroundColor = 'var(--surface)';
+        toastEl.style.color = 'var(--ink)';
+    }
 
     toastEl.innerHTML = `
-      <div class="d-flex text-paper">
-        <div class="toast-body font-body fw-bold">
+      <div class="d-flex">
+        <div class="toast-body font-body fw-bold" style="font-size: var(--text-md);">
           ${message}
         </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        <button type="button" class="btn-close me-2 m-auto ${(type === 'success' || type === 'error' || type === 'danger' || type === 'warning') ? 'btn-close-white' : ''}" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     `;
     
