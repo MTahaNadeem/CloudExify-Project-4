@@ -102,12 +102,17 @@ async function loadAllOrders() {
 
 async function updateOrderStatus(orderId, newStatus) {
     try {
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
             .from('orders')
             .update({ status: newStatus })
-            .eq('id', orderId);
+            .eq('id', parseInt(orderId, 10))
+            .select();
 
         if (error) throw error;
+        
+        if (!data || data.length === 0) {
+            throw new Error("No rows were updated. This is likely because Supabase Row Level Security (RLS) is blocking the update. You MUST run the SQL policies provided to allow admins to update orders!");
+        }
         
         if (typeof window.showToast === 'function') {
             window.showToast('Order status updated successfully.', 'success');
