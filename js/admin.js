@@ -150,7 +150,7 @@ async function loadAllOrders() {
             const customerName = profileMap[order.user_id] || 'Unknown Customer';
             const itemsSummary = (order.items || []).map(i => `${i.name} (x${i.qty})`).join(', ');
             const date = new Date(order.created_at).toLocaleString();
-            const statuses = ['Pending', 'Preparing', 'Ready'];
+            const statuses = ['Pending', 'Preparing', 'Ready', 'Completed'];
 
             let statusOptions = statuses.map(s => {
                 const selected = s === order.status ? 'selected' : '';

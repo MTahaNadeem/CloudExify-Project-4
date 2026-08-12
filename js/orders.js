@@ -147,6 +147,7 @@ async function loadOrderHistory() {
             if (order.status === 'Pending') statusClass = 'bg-brass text-paper';
             if (order.status === 'Preparing') statusClass = 'bg-ink text-paper';
             if (order.status === 'Ready') statusClass = 'bg-sage text-paper';
+            if (order.status === 'Completed') statusClass = 'bg-secondary text-paper';
             
             let itemsHtml = '<ul class="list-unstyled mb-0">';
             order.items.forEach(item => {
