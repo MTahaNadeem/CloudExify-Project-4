@@ -184,7 +184,7 @@ async function loadOrderHistory() {
         
     } catch (err) {
         console.error('Error loading orders:', err);
-        myOrdersContainer.innerHTML = `<div class="col-12 alert alert-danger">Failed to load order history.</div>`;
+        myOrdersContainer.innerHTML = `<div class="col-12 alert alert-danger">Failed to load order history: ${err.message}</div>`;
     }
 }
 window.loadOrderHistory = loadOrderHistory;

@@ -129,7 +129,15 @@ async function requireAdmin() {
 
         if (profileError || !profile || profile.role !== 'admin') {
             window.location.href = 'index.html';
+            return;
         }
+        
+        // Authorization successful
+        const loader = document.getElementById('adminLoader');
+        const content = document.getElementById('adminContent');
+        if (loader) loader.classList.add('d-none');
+        if (content) content.classList.remove('d-none');
+        
     } catch (err) {
         window.location.href = 'index.html';
     }

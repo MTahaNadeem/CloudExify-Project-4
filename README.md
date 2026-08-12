@@ -7,6 +7,6 @@
 ## Live Demo
 https://mtn-cloudexify-project-4.vercel.app/
 
-## Admin Credentials
-**Email:** [Admin Email]
-**Password:** [Admin Password]
+## Admin Credentials (For Testing)
+**Email:** tahanadeem478@gmail.com
+**Password:** Ta123@#

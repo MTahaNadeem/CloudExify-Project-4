@@ -12,7 +12,17 @@
 <body>
     <header id="site-navbar"></header>
 
-    <main class="container my-5 pt-5">
+    <!-- Loading State -->
+    <div id="adminLoader" class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: var(--paper);">
+        <div class="text-center">
+            <div class="spinner-border mb-3" role="status" style="color: var(--brass); width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Authenticating...</span>
+            </div>
+            <h5 class="font-display text-ink">Verifying Admin Access...</h5>
+        </div>
+    </div>
+
+    <main id="adminContent" class="container my-5 pt-5 d-none">
         <h2 class="mb-4 font-display" style="font-size: var(--text-xl);">Admin Dashboard</h2>
         <div id="dashboardStats" class="row g-4 mb-5">
             <div class="col-md-3 col-6">
