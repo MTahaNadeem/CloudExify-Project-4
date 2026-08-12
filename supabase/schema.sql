@@ -47,3 +47,19 @@ create policy "Users see own orders" on orders
 
 create policy "Users insert own orders" on orders
   for insert with check (auth.uid() = user_id);
+
+create policy "Admins can view all orders" on orders
+  for select using (
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'admin'
+    )
+  );
+
+create policy "Admins can update orders" on orders
+  for update using (
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'admin'
+    )
+  );

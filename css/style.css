@@ -81,6 +81,9 @@ body {
 .bg-ink { background-color: var(--ink) !important; }
 .bg-paper { background-color: var(--paper) !important; }
 .bg-surface { background-color: var(--surface) !important; }
+.bg-brass { background-color: var(--brass) !important; }
+.bg-sage { background-color: var(--sage) !important; }
+.bg-berry { background-color: var(--berry) !important; }
 
 /* Navbar Overrides */
 .navbar-custom {

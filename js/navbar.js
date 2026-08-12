@@ -14,17 +14,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Re-attach scroll listener for sticky nav
         const nav = document.getElementById('mainNav');
         if (nav) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
+            const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+            
+            const updateNavBg = () => {
+                if (!isHomePage || window.scrollY > 50) {
                     nav.classList.add('scrolled');
                 } else {
                     nav.classList.remove('scrolled');
                 }
-            });
-            // Initial check in case page is loaded already scrolled
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            }
+            };
+
+            window.addEventListener('scroll', updateNavBg);
+            updateNavBg(); // Initial check
         }
 
         // Re-attach logout listener since the button is newly injected
