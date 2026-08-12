@@ -16,12 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadAllOrders() {
     try {
-        const { data: orders, error } = await window.supabaseClient
+        const { data: orders, error: ordersError } = await supabaseClient
             .from('orders')
-            .select('*, profiles(full_name)')
+            .select('*')
             .order('created_at', { ascending: false });
 
-        if (error) throw error;
+        if (ordersError) throw ordersError;
+        
+        // Try to fetch profiles for name matching
+        let profileMap = {};
+        try {
+            const { data: profiles } = await supabaseClient
+                .from('profiles')
+                .select('id, full_name');
+            if (profiles) {
+                profiles.forEach(p => {
+                    profileMap[p.id] = p.full_name;
+                });
+            }
+        } catch (e) {
+            console.error("Could not fetch profiles:", e);
+        }
 
         const container = document.getElementById('ordersDashboard');
         if (!container) return;
@@ -47,7 +62,7 @@ async function loadAllOrders() {
         `;
 
         orders.forEach(order => {
-            const customerName = order.profiles?.full_name || 'Unknown Customer';
+            const customerName = profileMap[order.user_id] || 'Unknown Customer';
             const itemsSummary = (order.items || []).map(i => `${i.name} (x${i.qty})`).join(', ');
             const date = new Date(order.created_at).toLocaleString();
             const statuses = ['Pending', 'Preparing', 'Ready'];
@@ -87,7 +102,7 @@ async function loadAllOrders() {
 
 async function updateOrderStatus(orderId, newStatus) {
     try {
-        const { error } = await window.supabaseClient
+        const { error } = await supabaseClient
             .from('orders')
             .update({ status: newStatus })
             .eq('id', orderId);

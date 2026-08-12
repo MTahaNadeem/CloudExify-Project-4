@@ -114,14 +114,14 @@ async function requireUserSession() {
 }
 
 async function requireAdmin() {
-    const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (error || !session) {
         window.location.href = 'login.html';
         return;
     }
 
     try {
-        const { data: profile, error: profileError } = await window.supabaseClient
+        const { data: profile, error: profileError } = await supabaseClient
             .from('profiles')
             .select('role')
             .eq('id', session.user.id)
