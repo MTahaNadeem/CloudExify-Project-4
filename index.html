@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <nav id="mainNav" class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">Cafe & Bakery</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -38,21 +38,51 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="bg-ink text-paper py-5 text-center d-flex flex-column justify-content-center" style="min-height: 50vh;">
-        <div class="container fade-rise">
+    <header class="bg-ink text-paper text-center d-flex flex-column justify-content-center position-relative hero-gradient pt-5" style="min-height: 60vh; padding-top: 120px !important;">
+        <div class="container fade-rise z-1">
             <h1 class="font-display mb-3" style="font-size: var(--text-xxl);">The Hearth Bakery</h1>
-            <p class="font-body mb-4" style="font-size: var(--text-lg); opacity: 0.9;">Freshly baked goods and artisan coffee, crafted daily.</p>
+            <p class="font-body mb-2" style="font-size: var(--text-lg); opacity: 0.9;">Freshly baked goods and artisan coffee, crafted daily.</p>
+            <p class="font-mono text-brass mb-4 small">Open daily 7am–8pm · Downtown</p>
             <a href="#menuSection" class="btn btn-brass px-4 py-2" style="font-size: var(--text-md);">Explore the Menu</a>
+        </div>
+        <!-- Soft SVG Wave Divider overlapping bottom -->
+        <div class="position-absolute bottom-0 start-0 w-100 overflow-hidden" style="line-height: 0;">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" style="display: block; width: calc(100% + 1.3px); height: 50px;">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,152.47,103.5,221.7,85.25,257.5,75.83,293.2,65.8,321.39,56.44Z" fill="var(--paper)"></path>
+            </svg>
         </div>
     </header>
 
-    <main id="menuSection" class="container py-5">
+    <!-- Our Story Section -->
+    <section class="container py-5 mt-4">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h2 class="font-display mb-2" style="font-size: var(--text-xl);">Crafted with care.</h2>
+                <svg class="squiggle-underline mb-4" viewBox="0 0 150 15" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 10 Q 20 2, 35 10 T 65 10 T 95 10 T 125 10" fill="transparent" stroke="var(--brass)" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <p class="font-body opacity-75" style="line-height: 1.8;">
+                    Every morning before the sun comes up, our bakers are already at work. We believe in slow fermentation, real butter, and coffee roasted with intention. The Hearth isn't just a bakery; it's a daily ritual for our neighborhood.
+                </p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=600&h=400&fit=crop" class="img-fluid rounded shadow-sm" alt="Bakery interior" style="border: 6px solid var(--surface);">
+            </div>
+        </div>
+    </section>
+
+    <main id="menuSection" class="container py-5 mt-2">
         <div class="row mb-5 align-items-center">
             <div id="categoryFilters" class="col-md-7 d-flex flex-wrap gap-2 justify-content-md-start justify-content-center mb-3 mb-md-0">
                 <!-- Filter buttons injected here -->
             </div>
             <div class="col-md-5">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search menu...">
+                <div class="position-relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--ink)" class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 opacity-50" viewBox="0 0 16 16">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    <input type="text" id="searchInput" class="form-control focus-ring-brass ps-5 py-2" placeholder="Search menu...">
+                </div>
             </div>
         </div>
         <div id="menuGrid" class="row g-4 mb-5">
@@ -67,6 +97,50 @@
             </div>
         </div>
     </main>
+
+    <!-- As seen in our kitchen (Image Strip) -->
+    <section class="container-fluid kitchen-strip bg-surface mt-5">
+        <div class="row flex-nowrap justify-content-center px-3" style="gap: 15px;">
+            <div class="col-auto"><img src="https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=300&h=300&fit=crop" alt="Baking"></div>
+            <div class="col-auto"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=300&h=300&fit=crop" alt="Coffee pouring"></div>
+            <div class="col-auto d-none d-md-block"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=300&fit=crop" alt="Cake preparation"></div>
+            <div class="col-auto d-none d-lg-block"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=300&fit=crop" alt="Bread loaf"></div>
+            <div class="col-auto d-none d-xl-block"><img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&h=300&fit=crop" alt="Coffee cup"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ink text-paper py-5 mt-0" style="border-top: 4px solid var(--brass);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <h3 class="font-display mb-2">The Hearth Bakery</h3>
+                    <p class="font-body opacity-75 small" style="max-width: 300px;">Crafting daily rituals with slow fermentation, real butter, and intention.</p>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h6 class="font-mono text-brass mb-3 text-uppercase small">Quick Links</h6>
+                    <ul class="list-unstyled font-body small opacity-75">
+                        <li class="mb-2"><a href="#menuSection" class="text-paper text-decoration-none">Menu</a></li>
+                        <li class="mb-2"><a href="login.html" class="text-paper text-decoration-none">Customer Login</a></li>
+                        <li class="mb-2"><a href="register.html" class="text-paper text-decoration-none">Create Account</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="font-mono text-brass mb-3 text-uppercase small">Visit Us</h6>
+                    <ul class="list-unstyled font-body small opacity-75">
+                        <li class="mb-2">123 Baker Street, Downtown</li>
+                        <li class="mb-2">Open Daily: 7am - 8pm</li>
+                        <li>hello@hearthbakery.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-5 pt-4" style="border-top: 1px solid rgba(247, 241, 230, 0.1);">
+                <div class="col-12 text-center text-md-start">
+                    <p class="font-mono small opacity-50 mb-0">&copy; 2026 The Hearth Bakery. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Cart Offcanvas -->
     <div class="offcanvas offcanvas-end bg-surface" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
@@ -100,6 +174,17 @@
     <script src="js/menu.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/orders.js"></script>
+    <script>
+        // Sticky Navbar logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 
 </html>
