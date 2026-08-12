@@ -11,9 +11,10 @@
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
+    font-family: var(--font-family);
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    overflow-x: hidden;
 }
 
 .navbar-custom {

@@ -15,15 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Disable button during request
             const submitBtn = registerForm.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Registering...';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Registering...';
+            }
 
-            messageDiv.className = 'd-none alert mt-3 text-center';
+            await registerUser(fullName, email, password);
 
-            await registerUser(fullName, email, password, messageDiv);
-
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Register';
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Register';
+            }
         });
     }
 
@@ -37,15 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const messageDiv = document.getElementById('loginMessage');
 
             const submitBtn = loginForm.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Logging in...';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Logging in...';
+            }
 
-            messageDiv.className = 'd-none alert mt-3 text-center';
+            await loginUser(email, password);
 
-            await loginUser(email, password, messageDiv);
-
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Login';
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+            }
         });
     }
 
@@ -60,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateNavbar();
 });
 
-async function registerUser(name, email, password, messageDiv) {
+async function registerUser(name, email, password) {
     try {
         // 1. Sign up the user via Supabase Auth
         const { data: authData, error: authError } = await supabaseClient.auth.signUp({
@@ -81,25 +85,19 @@ async function registerUser(name, email, password, messageDiv) {
             if (profileError) throw profileError;
 
             // 3. Show success and redirect
-            showMessage(messageDiv, 'Registration successful! Redirecting to login...', 'success');
+            if (typeof window.showToast === 'function') window.showToast('Registration successful! Redirecting to login...', 'success');
             setTimeout(() => {
                 window.location.href = 'login.html';
             }, 2000);
         }
     } catch (error) {
         // 4. Show error
-        showMessage(messageDiv, error.message, 'danger');
+        if (typeof window.showToast === 'function') window.showToast(error.message, 'error');
+        else alert(error.message);
     }
 }
 
-// Helper to show messages in the UI
-function showMessage(element, text, type) {
-    element.textContent = text;
-    element.className = `alert alert-${type} mt-3 text-center`;
-    element.classList.remove('d-none');
-}
-
-async function loginUser(email, password, messageDiv) {
+async function loginUser(email, password) {
     try {
         const { error } = await supabaseClient.auth.signInWithPassword({
             email: email,
@@ -111,7 +109,8 @@ async function loginUser(email, password, messageDiv) {
         // On success, redirect to index
         window.location.href = 'index.html';
     } catch (error) {
-        showMessage(messageDiv, error.message, 'danger');
+        if (typeof window.showToast === 'function') window.showToast(error.message, 'error');
+        else alert(error.message);
     }
 }
 

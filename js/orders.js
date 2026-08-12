@@ -6,14 +6,16 @@ async function placeOrder() {
         const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
 
         if (userError || !user) {
-            alert('You must be logged in to place an order.');
+            if (typeof window.showToast === 'function') window.showToast('You must be logged in to place an order.', 'warning');
+            else alert('You must be logged in to place an order.');
             window.location.href = 'login.html';
             return;
         }
 
         // 2. Check if cart is empty
         if (!cart || cart.length === 0) {
-            alert('Your cart is empty!');
+            if (typeof window.showToast === 'function') window.showToast('Your cart is empty!', 'warning');
+            else alert('Your cart is empty!');
             return;
         }
 
@@ -22,9 +24,12 @@ async function placeOrder() {
 
         // Disable button during processing
         const checkoutBtn = document.getElementById('checkoutBtn');
-        const originalBtnText = checkoutBtn.innerText;
-        checkoutBtn.innerText = 'Processing...';
-        checkoutBtn.disabled = true;
+        let originalBtnText = 'Proceed to Checkout';
+        if (checkoutBtn) {
+            originalBtnText = checkoutBtn.innerText;
+            checkoutBtn.innerText = 'Processing...';
+            checkoutBtn.disabled = true;
+        }
 
         // 3. Insert order
         const { data: orderData, error: orderError } = await supabaseClient
@@ -38,8 +43,10 @@ async function placeOrder() {
             .select();
 
         // Reset button
-        checkoutBtn.innerText = originalBtnText;
-        checkoutBtn.disabled = false;
+        if (checkoutBtn) {
+            checkoutBtn.innerText = originalBtnText;
+            checkoutBtn.disabled = false;
+        }
 
         if (orderError) throw orderError;
 
@@ -76,13 +83,21 @@ async function placeOrder() {
             }
 
             // Show success alert
-            alert(`Success! Your order #${orderId} has been placed.`);
+            if (typeof window.showToast === 'function') {
+                window.showToast(`Success! Your order #${orderId} has been placed.`, 'success');
+            } else {
+                alert(`Success! Your order #${orderId} has been placed.`);
+            }
         }
 
     } catch (err) {
         // 5. On error
         console.error("Order placement error:", err);
-        alert(`Failed to place order: ${err.message}`);
+        if (typeof window.showToast === 'function') {
+            window.showToast(`Failed to place order: ${err.message}`, 'error');
+        } else {
+            alert(`Failed to place order: ${err.message}`);
+        }
     }
 }
 

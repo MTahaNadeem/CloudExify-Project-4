@@ -102,8 +102,8 @@ function renderCart() {
         
         html += `
             <div class="d-flex justify-content-between align-items-center mb-3 p-2 rounded" style="background-color: white; border: 1px solid rgba(111, 78, 55, 0.1);">
-                <div class="flex-grow-1">
-                    <h6 class="mb-0 fw-bold" style="color: var(--primary-color); text-truncate" style="max-width: 150px;">${item.name}</h6>
+                <div class="flex-grow-1" style="min-width: 0;">
+                    <h6 class="mb-0 fw-bold text-truncate" style="color: var(--primary-color);">${item.name}</h6>
                     <div class="text-muted small">Rs. ${item.price.toFixed(2)}</div>
                 </div>
                 
