@@ -30,6 +30,30 @@ alter table menu_items enable row level security;
 create policy "Menu items are viewable by everyone" on menu_items
   for select using (true);
 
+create policy "Admins can insert menu items" on menu_items
+  for insert with check (
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'admin'
+    )
+  );
+
+create policy "Admins can update menu items" on menu_items
+  for update using (
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'admin'
+    )
+  );
+
+create policy "Admins can delete menu items" on menu_items
+  for delete using (
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'admin'
+    )
+  );
+
 -- orders table
 create table orders (
   id serial primary key,

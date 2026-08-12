@@ -12,6 +12,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+    
+    // Menu Management
+    loadMenuItems();
+    
+    const menuForm = document.getElementById('menuForm');
+    if (menuForm) {
+        menuForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                id: document.getElementById('menuItemId').value,
+                name: document.getElementById('menuItemName').value,
+                description: document.getElementById('menuItemDesc').value,
+                price: parseFloat(document.getElementById('menuItemPrice').value),
+                category: document.getElementById('menuItemCategory').value,
+                image_url: document.getElementById('menuItemImage').value,
+                available: document.getElementById('menuItemAvailable').checked
+            };
+            
+            await saveMenuItem(formData);
+        });
+    }
+
+    const menuFormCancel = document.getElementById('menuFormCancel');
+    if (menuFormCancel) {
+        menuFormCancel.addEventListener('click', () => {
+            document.getElementById('menuForm').reset();
+            document.getElementById('menuItemId').value = '';
+            document.getElementById('menuFormTitle').innerText = 'Add New Item';
+            menuFormCancel.classList.add('d-none');
+        });
+    }
 });
 
 async function loadAllOrders() {
@@ -124,4 +156,196 @@ async function updateOrderStatus(orderId, newStatus) {
             window.showToast('Failed to update status.', 'error');
         }
     }
+    }
 }
+
+// --- Menu Management Functions ---
+
+async function loadMenuItems() {
+    const container = document.getElementById('menuItemsTableContainer');
+    if (!container) return;
+    
+    try {
+        container.innerHTML = '<div class="text-center p-4"><div class="spinner-border" style="color: var(--brass);"></div></div>';
+        
+        const { data: items, error } = await supabaseClient
+            .from('menu_items')
+            .select('*')
+            .order('category')
+            .order('name');
+            
+        if (error) throw error;
+        
+        if (!items || items.length === 0) {
+            container.innerHTML = '<p class="text-muted text-center font-mono py-4">No menu items found.</p>';
+            return;
+        }
+        
+        window.currentMenuItems = items;
+        
+        let tableHtml = `
+            <table class="table table-hover font-body bg-surface mb-0 align-middle">
+                <thead style="border-bottom: 2px solid rgba(43, 27, 18, 0.1);">
+                    <tr>
+                        <th class="font-mono small text-uppercase text-ink border-0">Name</th>
+                        <th class="font-mono small text-uppercase text-ink border-0">Category</th>
+                        <th class="font-mono small text-uppercase text-ink border-0">Price</th>
+                        <th class="font-mono small text-uppercase text-ink border-0">Status</th>
+                        <th class="font-mono small text-uppercase text-ink border-0 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+        `;
+        
+        items.forEach(item => {
+            const badgeClass = item.available ? 'bg-sage text-paper' : 'bg-berry text-paper';
+            const badgeText = item.available ? 'Available' : 'Sold Out';
+            
+            tableHtml += `
+                <tr>
+                    <td class="fw-bold">${item.name}</td>
+                    <td>${item.category}</td>
+                    <td class="font-mono">Rs. ${parseFloat(item.price).toFixed(2)}</td>
+                    <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+                    <td class="text-end" style="min-width: 140px;">
+                        <button class="btn btn-sm btn-outline-ink edit-item-btn" data-id="${item.id}">Edit</button>
+                        <button class="btn btn-sm btn-berry ms-1 delete-item-btn" data-id="${item.id}">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        tableHtml += `</tbody></table>`;
+        container.innerHTML = tableHtml;
+        
+        container.querySelectorAll('.edit-item-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => editMenuItem(e.target.getAttribute('data-id')));
+        });
+        
+        container.querySelectorAll('.delete-item-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => deleteMenuItem(e.target.getAttribute('data-id')));
+        });
+        
+    } catch (err) {
+        console.error('Error loading menu items:', err);
+        container.innerHTML = '<div class="alert alert-danger">Failed to load menu items.</div>';
+    }
+}
+
+async function saveMenuItem(data) {
+    try {
+        let error;
+        const submitBtn = document.querySelector('#menuForm button[type="submit"]');
+        if (submitBtn) submitBtn.innerText = 'Saving...';
+        
+        const payload = {
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            category: data.category,
+            image_url: data.image_url,
+            available: data.available
+        };
+        
+        if (data.id) {
+            const response = await supabaseClient
+                .from('menu_items')
+                .update(payload)
+                .eq('id', parseInt(data.id, 10))
+                .select();
+                
+            error = response.error;
+            if (!error && (!response.data || response.data.length === 0)) {
+                throw new Error("No rows updated. Ensure you ran the RLS policies in Supabase.");
+            }
+        } else {
+            const response = await supabaseClient
+                .from('menu_items')
+                .insert([payload])
+                .select();
+            error = response.error;
+            if (!error && (!response.data || response.data.length === 0)) {
+                throw new Error("Insert failed. Ensure you ran the RLS policies in Supabase.");
+            }
+        }
+        
+        if (error) throw error;
+        
+        if (typeof window.showToast === 'function') {
+            window.showToast(`Item ${data.id ? 'updated' : 'created'} successfully!`, 'success');
+        } else {
+            alert(`Item ${data.id ? 'updated' : 'created'} successfully!`);
+        }
+        
+        document.getElementById('menuForm').reset();
+        document.getElementById('menuItemId').value = '';
+        document.getElementById('menuFormTitle').innerText = 'Add New Item';
+        const cancelBtn = document.getElementById('menuFormCancel');
+        if (cancelBtn) cancelBtn.classList.add('d-none');
+        
+        loadMenuItems();
+        
+    } catch (err) {
+        console.error('Error saving item:', err);
+        if (typeof window.showToast === 'function') {
+            window.showToast(`Error: ${err.message}`, 'error');
+        } else {
+            alert(`Error: ${err.message}`);
+        }
+    } finally {
+        const submitBtn = document.querySelector('#menuForm button[type="submit"]');
+        if (submitBtn) submitBtn.innerText = 'Save Item';
+    }
+}
+
+window.editMenuItem = function(id) {
+    if (!window.currentMenuItems) return;
+    
+    const item = window.currentMenuItems.find(i => i.id === parseInt(id, 10));
+    if (!item) return;
+    
+    document.getElementById('menuItemId').value = item.id;
+    document.getElementById('menuItemName').value = item.name;
+    document.getElementById('menuItemDesc').value = item.description || '';
+    document.getElementById('menuItemPrice').value = item.price;
+    document.getElementById('menuItemCategory').value = item.category || '';
+    document.getElementById('menuItemImage').value = item.image_url || '';
+    document.getElementById('menuItemAvailable').checked = item.available;
+    
+    document.getElementById('menuFormTitle').innerText = 'Edit Item';
+    document.getElementById('menuFormCancel').classList.remove('d-none');
+    
+    document.getElementById('menuFormTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
+window.deleteMenuItem = async function(id) {
+    if (!confirm('Are you sure you want to delete this menu item?')) return;
+    
+    try {
+        const { data, error } = await supabaseClient
+            .from('menu_items')
+            .delete()
+            .eq('id', parseInt(id, 10))
+            .select();
+            
+        if (error) throw error;
+        if (!data || data.length === 0) {
+            throw new Error("No rows deleted. Ensure you ran the RLS policies in Supabase.");
+        }
+        
+        if (typeof window.showToast === 'function') {
+            window.showToast('Item deleted successfully.', 'success');
+        } else {
+            alert('Item deleted successfully.');
+        }
+        
+        loadMenuItems();
+    } catch (err) {
+        console.error('Error deleting item:', err);
+        if (typeof window.showToast === 'function') {
+            window.showToast(`Error deleting item: ${err.message}`, 'error');
+        } else {
+            alert(`Error deleting item: ${err.message}`);
+        }
+    }
+};

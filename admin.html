@@ -23,7 +23,52 @@
         </div>
 
         <div id="menuManagement" class="mb-5">
-            <!-- Menu management forms will go here -->
+            <h3 class="mb-4 font-display text-ink" style="font-size: var(--text-lg); border-bottom: 2px solid var(--brass); padding-bottom: 10px; display: inline-block;">Menu Management</h3>
+            <div class="row g-4">
+                <!-- Form Column -->
+                <div class="col-lg-4">
+                    <div class="card ticket-card">
+                        <div class="card-body p-4">
+                            <h4 class="font-display mb-4 text-ink" id="menuFormTitle" style="font-size: var(--text-md);">Add New Item</h4>
+                            <form id="menuForm">
+                                <input type="hidden" id="menuItemId">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold font-mono small text-uppercase">Name</label>
+                                    <input type="text" class="form-control" id="menuItemName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold font-mono small text-uppercase">Description</label>
+                                    <textarea class="form-control" id="menuItemDesc" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold font-mono small text-uppercase">Price (Rs.)</label>
+                                    <input type="number" step="0.01" class="form-control" id="menuItemPrice" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold font-mono small text-uppercase">Category</label>
+                                    <input type="text" class="form-control" id="menuItemCategory" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold font-mono small text-uppercase">Image URL</label>
+                                    <input type="url" class="form-control" id="menuItemImage" required>
+                                </div>
+                                <div class="mb-4 form-check">
+                                    <input type="checkbox" class="form-check-input" id="menuItemAvailable" checked>
+                                    <label class="form-check-label fw-bold font-body" for="menuItemAvailable">Available</label>
+                                </div>
+                                <button type="submit" class="btn btn-brass w-100 py-2">Save Item</button>
+                                <button type="button" class="btn btn-outline-ink w-100 py-2 mt-2 d-none" id="menuFormCancel">Cancel Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Table Column -->
+                <div class="col-lg-8">
+                    <div class="table-responsive" id="menuItemsTableContainer">
+                        <!-- Menu items table will be injected here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
