@@ -101,21 +101,21 @@ function renderCart() {
         total += lineTotal;
         
         html += `
-            <div class="d-flex justify-content-between align-items-center mb-3 p-2 rounded" style="background-color: white; border: 1px solid rgba(111, 78, 55, 0.1);">
+            <div class="d-flex justify-content-between align-items-center receipt-item">
                 <div class="flex-grow-1" style="min-width: 0;">
-                    <h6 class="mb-0 fw-bold text-truncate" style="color: var(--primary-color);">${item.name}</h6>
-                    <div class="text-muted small">Rs. ${item.price.toFixed(2)}</div>
+                    <h6 class="mb-0 font-body fw-bold text-truncate text-ink">${item.name}</h6>
+                    <div class="text-ink small font-mono opacity-75">Rs. ${item.price.toFixed(2)}</div>
                 </div>
                 
                 <div class="d-flex align-items-center mx-2">
-                    <button class="btn btn-sm btn-outline-secondary px-2 py-0 fw-bold" onclick="updateQty(${item.id}, -1)">-</button>
-                    <span class="mx-2 fw-bold" style="color: var(--primary-color);">${item.qty}</span>
-                    <button class="btn btn-sm btn-outline-secondary px-2 py-0 fw-bold" onclick="updateQty(${item.id}, 1)">+</button>
+                    <button class="btn btn-sm btn-outline-ink px-2 py-0 fw-bold" onclick="updateQty(${item.id}, -1)">-</button>
+                    <span class="mx-2 font-mono fw-bold text-ink">${item.qty}</span>
+                    <button class="btn btn-sm btn-outline-ink px-2 py-0 fw-bold" onclick="updateQty(${item.id}, 1)">+</button>
                 </div>
                 
-                <div class="text-end d-flex flex-column align-items-end" style="width: 70px;">
-                    <div class="fw-bold" style="color: var(--primary-color);">Rs. ${lineTotal.toFixed(2)}</div>
-                    <button class="btn btn-sm text-danger p-0 mt-1" style="font-size: 0.8rem;" onclick="removeFromCart(${item.id})">Remove</button>
+                <div class="text-end d-flex flex-column align-items-end" style="width: 80px;">
+                    <div class="font-mono fw-bold text-ink">Rs. ${lineTotal.toFixed(2)}</div>
+                    <button class="btn btn-sm text-berry p-0 mt-1" style="font-size: 0.8rem;" onclick="removeFromCart(${item.id})">Remove</button>
                 </div>
             </div>
         `;

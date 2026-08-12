@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item me-3 mb-2 mb-lg-0">
-                        <button class="btn btn-outline-light position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" style="color: var(--secondary-color); border-color: var(--secondary-color);">
+                        <button class="btn btn-outline-ink position-relative text-paper" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" style="border-color: var(--paper);">
                             Cart
                             <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
                                 0
@@ -37,13 +37,22 @@
         </div>
     </nav>
 
-    <main class="container my-5">
-        <div class="row mb-4">
+    <!-- Hero Section -->
+    <header class="bg-ink text-paper py-5 text-center d-flex flex-column justify-content-center" style="min-height: 50vh;">
+        <div class="container fade-rise">
+            <h1 class="font-display mb-3" style="font-size: var(--text-xxl);">The Hearth Bakery</h1>
+            <p class="font-body mb-4" style="font-size: var(--text-lg); opacity: 0.9;">Freshly baked goods and artisan coffee, crafted daily.</p>
+            <a href="#menuSection" class="btn btn-brass px-4 py-2" style="font-size: var(--text-md);">Explore the Menu</a>
+        </div>
+    </header>
+
+    <main id="menuSection" class="container py-5">
+        <div class="row mb-5 align-items-center">
             <div id="categoryFilters" class="col-md-7 d-flex flex-wrap gap-2 justify-content-md-start justify-content-center mb-3 mb-md-0">
                 <!-- Filter buttons injected here -->
             </div>
             <div class="col-md-5">
-                <input type="text" id="searchInput" class="form-control border-0 shadow-sm" placeholder="Search menu..." style="background-color: var(--secondary-color); color: var(--primary-color);">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search menu...">
             </div>
         </div>
         <div id="menuGrid" class="row g-4 mb-5">
@@ -51,8 +60,8 @@
         </div>
         
         <!-- My Orders section (only visible when logged in) -->
-        <div class="mt-5 pt-5 auth-in d-none" style="border-top: 1px solid rgba(111, 78, 55, 0.2);">
-            <h2 class="mb-4 fw-bold" style="color: var(--primary-color);">My Orders</h2>
+        <div class="mt-5 pt-5 auth-in d-none" style="border-top: 1px dashed rgba(43, 27, 18, 0.2);">
+            <h2 class="mb-4 font-display" style="font-size: var(--text-xl);">My Orders</h2>
             <div id="myOrders" class="row g-4">
                 <!-- Orders will be injected here -->
             </div>
@@ -60,22 +69,22 @@
     </main>
 
     <!-- Cart Offcanvas -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel" style="background-color: var(--secondary-color);">
-        <div class="offcanvas-header" style="border-bottom: 1px solid rgba(111, 78, 55, 0.2);">
-            <h5 class="offcanvas-title fw-bold" id="cartOffcanvasLabel" style="color: var(--primary-color);">Your Cart</h5>
+    <div class="offcanvas offcanvas-end bg-surface" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+        <div class="offcanvas-header" style="border-bottom: 1px dashed rgba(43, 27, 18, 0.2);">
+            <h5 class="offcanvas-title font-display" id="cartOffcanvasLabel" style="font-size: var(--text-lg);">Your Ticket</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body d-flex flex-column">
+        <div class="offcanvas-body d-flex flex-column font-body">
             <div id="cartItemsContainer" class="flex-grow-1 overflow-auto">
                 <!-- Cart items injected here -->
             </div>
-            <div class="mt-3 pt-3" style="border-top: 1px solid rgba(111, 78, 55, 0.2);">
-                <div class="d-flex justify-content-between fw-bold mb-3" style="color: var(--primary-color); font-size: 1.2rem;">
-                    <span>Total:</span>
-                    <span id="cartTotal">Rs. 0.00</span>
+            <div class="mt-3 receipt-total">
+                <div class="d-flex justify-content-between mb-4">
+                    <span class="font-display" style="font-size: var(--text-lg);">Total</span>
+                    <span id="cartTotal" class="font-mono text-brass" style="font-size: var(--text-lg);">Rs. 0.00</span>
                 </div>
-                <button class="btn w-100 fw-bold py-2" id="checkoutBtn" style="background-color: var(--primary-color); color: var(--secondary-color);" onclick="placeOrder()">
-                    Proceed to Checkout
+                <button class="btn btn-brass w-100 py-3" id="checkoutBtn" onclick="placeOrder()" style="font-size: var(--text-md);">
+                    Confirm Order
                 </button>
             </div>
         </div>

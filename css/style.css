@@ -1,7 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
-  --primary-color: #6F4E37; /* Coffee brown */
-  --secondary-color: #F2E3D0; /* Warm cream */
-  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --ink: #2B1B12;
+  --paper: #F7F1E6;
+  --surface: #FFFDF9;
+  --brass: #A9682F;
+  --sage: #4B5D46;
+  --berry: #7A2E2E;
+
+  /* Typography scale */
+  --text-xs: 0.875rem;
+  --text-sm: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.5rem;
+  --text-xl: 2rem;
+  --text-xxl: 2.75rem;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Work Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 * {
@@ -11,21 +28,188 @@
 }
 
 body {
-    font-family: var(--font-family);
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    overflow-x: hidden;
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-size: var(--text-sm);
 }
 
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+.font-body {
+  font-family: var(--font-body);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+.text-ink { color: var(--ink) !important; }
+.text-paper { color: var(--paper) !important; }
+.text-brass { color: var(--brass) !important; }
+.text-sage { color: var(--sage) !important; }
+.text-berry { color: var(--berry) !important; }
+
+/* Backgrounds */
+.bg-ink { background-color: var(--ink) !important; }
+.bg-paper { background-color: var(--paper) !important; }
+.bg-surface { background-color: var(--surface) !important; }
+
+/* Navbar Overrides */
 .navbar-custom {
-  background-color: var(--primary-color) !important;
+  background-color: var(--ink) !important;
+  border-bottom: 1px solid rgba(247, 241, 230, 0.1);
 }
-
-.navbar-custom .navbar-brand,
+.navbar-custom .navbar-brand {
+  font-family: var(--font-display);
+  color: var(--paper) !important;
+  font-size: var(--text-lg);
+  letter-spacing: -0.02em;
+}
 .navbar-custom .nav-link {
-  color: var(--secondary-color) !important;
+  color: var(--paper) !important;
+  font-family: var(--font-body);
 }
-
 .navbar-custom .nav-link:hover {
   opacity: 0.8;
+}
+/* Ensure offcanvas toggler uses light lines against dark navbar */
+.navbar-dark .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Buttons */
+.btn-brass {
+  background-color: var(--brass);
+  color: var(--paper);
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.btn-brass:hover {
+  background-color: #8c5525;
+  color: var(--paper);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(169, 104, 47, 0.3);
+}
+.btn-brass:disabled {
+  background-color: #8c5525;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-sage {
+  background-color: var(--sage);
+  color: var(--paper);
+  border: none;
+  border-radius: 4px;
+}
+.btn-berry {
+  background-color: var(--berry);
+  color: var(--paper);
+  border: none;
+  border-radius: 4px;
+}
+.btn-outline-ink {
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  border-radius: 4px;
+  background: transparent;
+  font-family: var(--font-body);
+}
+.btn-outline-ink:hover, .btn-outline-ink.active {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+/* Forms */
+.form-control {
+  border-radius: 4px;
+  border: 1px solid rgba(43, 27, 18, 0.2);
+  background-color: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+.form-control:focus {
+  border-color: var(--brass);
+  box-shadow: 0 0 0 0.2rem rgba(169, 104, 47, 0.25);
+  background-color: var(--surface);
+}
+
+/* The Ticket Card */
+.ticket-wrapper {
+  padding-bottom: 8px; /* space for perforated edge */
+  height: 100%;
+}
+.ticket-card {
+  background-color: var(--surface);
+  border-radius: 0; 
+  box-shadow: 0 4px 15px rgba(43, 27, 18, 0.05);
+  border: none;
+  position: relative;
+  overflow: hidden; /* For the stamp */
+  height: 100%;
+}
+.ticket-card::after {
+  content: '';
+  position: absolute;
+  bottom: -8px; /* Stick out below the card */
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: radial-gradient(circle at 4px 0px, transparent 4px, var(--surface) 5px);
+  background-size: 12px 10px;
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  z-index: 10;
+}
+
+/* Stamp Badge */
+.category-stamp {
+  position: absolute;
+  top: 15px;
+  right: -25px;
+  background-color: var(--sage);
+  color: var(--paper);
+  padding: 4px 30px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 5;
+}
+
+/* Receipt Offcanvas items */
+.receipt-item {
+  border-bottom: 1px dashed rgba(43, 27, 18, 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.receipt-total {
+  border-top: 2px dashed var(--ink);
+  padding-top: 15px;
+}
+
+/* Animations */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fade-rise {
+    animation: fadeRise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
 }

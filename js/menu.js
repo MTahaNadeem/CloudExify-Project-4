@@ -101,11 +101,11 @@ window.handleCategoryClick = function (category, btnElement) {
     const buttons = document.querySelectorAll('#categoryFilters button');
     buttons.forEach(btn => {
         btn.classList.remove('active-filter');
-        btn.style = 'color: var(--primary-color); border-color: var(--primary-color);';
+        btn.style = 'color: var(--ink); border-color: var(--ink);';
     });
 
     btnElement.classList.add('active-filter');
-    btnElement.style = 'background-color: var(--primary-color); color: var(--secondary-color); border: none;';
+    btnElement.style = 'background-color: var(--ink); color: var(--paper); border: none;';
 
     filterAndRenderMenu(null, category);
 };
@@ -121,22 +121,27 @@ function renderMenuGrid(items) {
     // Placeholder SVG for broken/missing images
     const fallbackImage = `data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23F2E3D0%22%3E%3C%2Frect%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22%236F4E37%22%20dy%3D%22.3em%22%20style%3D%22font-size%3A1.5rem;font-weight%3Abold;text-anchor%3Amiddle%22%3ENo%20Image%3C%2Ftext%3E%3C%2Fsvg%3E`;
 
-    menuGrid.innerHTML = items.map(item => `
+    menuGrid.innerHTML = itemsToRender.map(item => `
         <div class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0" style="background-color: var(--secondary-color);">
-                <img src="${item.image_url}" class="card-img-top" alt="${item.name}" style="height: 200px; object-fit: cover;" onerror="this.src='${fallbackImage}'">
-                <div class="card-body d-flex flex-column">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h5 class="card-title fw-bold mb-0" style="color: var(--primary-color);">${item.name}</h5>
-                        <span class="badge" style="background-color: var(--primary-color); color: var(--secondary-color); font-size: 0.9em;">Rs. ${parseFloat(item.price).toFixed(2)}</span>
+            <div class="ticket-wrapper">
+                <div class="card ticket-card h-100">
+                    <div class="category-stamp">${item.category}</div>
+                    <img src="${item.image_url}" class="card-img-top" alt="${item.name}" style="height: 200px; object-fit: cover;" onerror="this.src='${fallbackImage}'">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title font-display mb-0 text-ink">${item.name}</h5>
+                        </div>
+                        <p class="card-text small flex-grow-1 font-body text-ink" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; opacity: 0.85;">${item.description || ''}</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3" style="border-top: 1px dashed rgba(43, 27, 18, 0.2);">
+                            <span class="font-mono text-brass fw-bold fs-5">Rs. ${parseFloat(item.price).toFixed(2)}</span>
+                            <button class="btn btn-brass add-to-cart-btn px-4" data-id="${item.id}">
+                                Add
+                            </button>
+                        </div>
                     </div>
-                    <p class="card-text small flex-grow-1" style="color: #555;">${item.description || ''}</p>
-                    <button class="btn w-100 fw-bold mt-3 add-to-cart-btn" style="background-color: var(--primary-color); color: var(--secondary-color);" data-id="${item.id}">
-                        Add to Cart
-                    </button>
                 </div>
             </div>
         </div>
     `).join('');
 }
-

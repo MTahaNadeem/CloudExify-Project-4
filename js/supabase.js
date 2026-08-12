@@ -24,20 +24,17 @@ window.showToast = function(message, type = 'info') {
     toastEl.setAttribute('aria-atomic', 'true');
     
     // Theme colors mapping
-    let bgClass = 'bg-primary'; // Default fallback
-    if (type === 'success') bgClass = 'bg-success';
-    if (type === 'error' || type === 'danger') bgClass = 'bg-danger';
-    if (type === 'warning') bgClass = 'bg-warning text-dark';
-    if (type === 'info') bgClass = 'bg-info text-dark';
+    let bgClass = 'bg-ink'; // Default fallback
+    if (type === 'success') bgClass = 'bg-sage';
+    if (type === 'error' || type === 'danger') bgClass = 'bg-berry';
+    if (type === 'warning') bgClass = 'bg-brass text-paper';
+    if (type === 'info') bgClass = 'bg-ink text-paper';
 
-    // Cafe & Bakery theme overrides
-    if (type === 'success') toastEl.style.backgroundColor = 'var(--primary-color)';
-    else if (type === 'error' || type === 'danger') toastEl.style.backgroundColor = '#dc3545';
-    else toastEl.classList.add(bgClass);
+    toastEl.classList.add(bgClass);
 
     toastEl.innerHTML = `
-      <div class="d-flex">
-        <div class="toast-body fw-bold">
+      <div class="d-flex text-paper">
+        <div class="toast-body font-body fw-bold">
           ${message}
         </div>
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>

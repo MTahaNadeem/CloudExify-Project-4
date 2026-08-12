@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Cafe & Bakery</a>
+            <a class="navbar-brand font-display" href="index.html">The Hearth Bakery</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -26,9 +26,9 @@
 
     <main class="container my-5">
         <div id="registerFormContainer" class="col-md-6 mx-auto">
-            <div class="card shadow-sm border-0" style="background-color: var(--secondary-color);">
+            <div class="card ticket-card">
                 <div class="card-body p-4">
-                    <h2 class="text-center mb-4" style="color: var(--primary-color);">Create an Account</h2>
+                    <h2 class="text-center mb-4 font-display text-ink" style="font-size: var(--text-xl);">Create Account</h2>
                     <form id="registerForm">
                         <div class="mb-3">
                             <label for="fullName" class="form-label fw-bold">Full Name</label>
@@ -42,11 +42,11 @@
                             <label for="password" class="form-label fw-bold">Password</label>
                             <input type="password" class="form-control" id="password" minlength="6" required>
                         </div>
-                        <button type="submit" class="btn w-100 fw-bold" style="background-color: var(--primary-color); color: var(--secondary-color);">Register</button>
+                        <button type="submit" class="btn btn-brass w-100 py-2">Register</button>
                     </form>
                     <div id="registerMessage" class="d-none alert mt-3 text-center"></div>
-                    <div class="text-center mt-3">
-                        <a href="login.html" class="text-decoration-none" style="color: var(--primary-color);">Already have an account? Login here.</a>
+                    <div class="text-center mt-4">
+                        <a href="login.html" class="text-decoration-none text-brass fw-bold">Already have an account? Login here.</a>
                     </div>
                 </div>
             </div>

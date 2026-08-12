@@ -143,35 +143,36 @@ async function loadOrderHistory() {
         orders.forEach(order => {
             const date = new Date(order.created_at).toLocaleString();
             
-            let statusClass = 'bg-secondary';
-            if (order.status === 'Pending') statusClass = 'bg-warning text-dark';
-            if (order.status === 'Preparing') statusClass = 'bg-info text-dark';
-            if (order.status === 'Ready') statusClass = 'bg-success';
+            let statusClass = 'bg-ink text-paper';
+            if (order.status === 'Pending') statusClass = 'bg-brass text-paper';
+            if (order.status === 'Preparing') statusClass = 'bg-ink text-paper';
+            if (order.status === 'Ready') statusClass = 'bg-sage text-paper';
             
             let itemsHtml = '<ul class="list-unstyled mb-0">';
             order.items.forEach(item => {
-                itemsHtml += `<li><span class="fw-bold">${item.qty}x</span> ${item.name} <span class="text-muted small">(Rs. ${item.price.toFixed(2)})</span></li>`;
+                itemsHtml += `<li><span class="font-mono fw-bold">${item.qty}x</span> <span class="font-body">${item.name}</span> <span class="font-mono text-ink opacity-75 small">(Rs. ${item.price.toFixed(2)})</span></li>`;
             });
             itemsHtml += '</ul>';
             
             html += `
                 <div class="col-12 col-md-6">
-                    <div class="card h-100 shadow-sm border-0" style="border-left: 4px solid var(--primary-color) !important; background-color: var(--secondary-color);">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="card-title fw-bold mb-0" style="color: var(--primary-color);">Order #${order.id}</h6>
-                                <span class="badge ${statusClass}">${order.status}</span>
-                            </div>
-                            <div class="text-muted small mb-3">${date}</div>
-                            
-                            <div class="mb-3">
-                                <strong style="color: var(--primary-color);">Items:</strong>
-                                ${itemsHtml}
-                            </div>
-                            
-                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3" style="border-top: 1px solid rgba(111, 78, 55, 0.2);">
-                                <strong style="color: var(--primary-color);">Total:</strong>
-                                <span class="fw-bold fs-5" style="color: var(--primary-color);">Rs. ${parseFloat(order.total).toFixed(2)}</span>
+                    <div class="ticket-wrapper">
+                        <div class="card ticket-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="card-title font-mono fw-bold mb-0 text-ink">Order #${order.id}</h6>
+                                    <span class="badge ${statusClass}">${order.status}</span>
+                                </div>
+                                <div class="text-ink opacity-75 font-mono small mb-3 pb-3" style="border-bottom: 1px dashed rgba(43, 27, 18, 0.2);">${date}</div>
+                                
+                                <div class="mb-3 font-body">
+                                    ${itemsHtml}
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3" style="border-top: 1px dashed rgba(43, 27, 18, 0.2);">
+                                    <strong class="font-display text-ink" style="font-size: var(--text-md);">Total</strong>
+                                    <span class="font-mono fw-bold fs-5 text-brass">Rs. ${parseFloat(order.total).toFixed(2)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
